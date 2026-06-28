@@ -13,24 +13,28 @@ export default function ProductDetails() {
 
     const products = {
         "nike-air-max-270":{
+            id:1,
             name: "Nike Air Max 270",
             price: "Rs 9,999",
             image: "/images/nike-airmax270.png",
         },
 
         "adidas-ultraboost" : {
+            id:2,
             name: "Adidas Ultraboost",
             price: "Rs 11,999",
             image: "/images/adidas-ultraboost.png",
         },
 
         "puma-rs-x": {
+            id:3,
             name: "Puma RS-X",
             price: "Rs 8,499",
             image: "/images/puma-rsx.png",
         },
 
         "new-balance-9060": {
+            id:4,
             name:"New Balance 9060",
             price: "Rs 12,499",
             image: "/images/newbalance-9060.png"
@@ -40,11 +44,10 @@ export default function ProductDetails() {
     const product = products[slug];
 
     const addToCart = () => {
-        const updatedCart = {...cart, product};
-
-        setCart(updatedCart);
-
+        const updatedCart = [...cart, product];
         console.log(updatedCart);
+        setCart(updatedCart);
+        alert(`${product.name} added to cart!`);
 
         
     };
