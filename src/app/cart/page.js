@@ -47,8 +47,20 @@ export default function CartPage() {
                         {item.name}
                      </h2>
 
+                     <p className="text-gray-400 mt-2">
+                        Quantity: {item.quantity}
+                     </p>
+
                      <p className="text-yellow-400 mt-2">
-                        {item.price}
+                        Rs{" "}
+                        {(
+                            Number(
+                                item.price 
+                                  .replace("Rs","")
+                                  .replace(",","")
+
+                            ) * item.quantity
+                        ).toLocaleString()}
                      </p>
 
                      <button
