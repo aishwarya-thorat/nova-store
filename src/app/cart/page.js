@@ -13,6 +13,15 @@ export default function CartPage() {
        setCart(updatedCart);
         
     };
+
+    const total = cart.reduce((total, item) => {
+        return total + Number(
+            item.price
+               .replace("Rs","")
+               .replace(",","")
+        );
+
+    },0);
     return(
         <section className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
             <h1 className="text-5xl font-bold mb-4">
@@ -25,7 +34,7 @@ export default function CartPage() {
 
             {cart.map((item,index) => (
                 <div
-                 key={index.id}
+                 key={item.id}
                  className="bg-zinc-900 rounded-xl p-6 w-96 mt-4"
                  >
                     <img
@@ -50,6 +59,12 @@ export default function CartPage() {
                       </button>
                  </div>
             ))}
+
+            <div className="mt-8 border-t border-zinc-700 pt-6 w-96">
+                <h2 className="text-3xl font-bold">
+                    Total: Rs {total.toLocaleString()}
+                </h2>
+            </div>
         </section>
     );
 }
