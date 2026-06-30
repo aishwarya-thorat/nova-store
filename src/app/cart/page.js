@@ -6,20 +6,22 @@ import { CartContext } from
 
 export default function CartPage() {
 
-    const { cart, setCart } = useContext(CartContext);
-    const removeFromCart = (id) => {
-        const updatedCart = cart.filter((item) =>
-    item.id !== id);
-       setCart(updatedCart);
-        
-    };
+    const { 
+        cart,
+        setCart,
+        addToCart,
+        decreaseQuantity,
+     } = useContext(CartContext); 
+   
 
     const total = cart.reduce((total, item) => {
-        return total + Number(
+        const price  = Number(
             item.price
                .replace("Rs","")
                .replace(",","")
         );
+
+        return total + price * item.quantity;
 
     },0);
     return(
@@ -63,12 +65,27 @@ export default function CartPage() {
                         ).toLocaleString()}
                      </p>
 
-                     <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg"
-                      >
-                        Remove
-                      </button>
+                    <div className="flex items-center gap-4 mt-4">
+                        <button
+                          onClick={() => 
+                    decreaseQuantity(item.id)}
+                        className="bg-red-500 text-white w-10 h-10 rounded-full"
+                        >
+                            -
+                        </button>
+
+                        <span className ="text-xl font-bold">
+                            {item.quantity}
+                        </span>
+                        <button 
+                          onClick={() => addToCart(item)}
+                          className="bg-green-500 text-white
+                        w-10 h-10 rounded-full"
+                         >
+                            +
+                         </button>
+                          
+                    </div>
                  </div>
             ))}
 

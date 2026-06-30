@@ -8,7 +8,7 @@ import { CartContext} from
 export default function ProductDetails() {
     const { slug } = useParams();
 
-    const { cart, setCart} = 
+    const { addToCart } = 
   useContext(CartContext);
 
     const products = {
@@ -43,40 +43,6 @@ export default function ProductDetails() {
 
     const product = products[slug];
 
-    const addToCart = () => {
-      const existingProduct = cart.find(
-        (item) => item.id === product.id
-      );
-
-      if(existingProduct){
-        const updatedCart = cart.map((item) => {
-            if(item.id === product.id) {
-                return {
-                    ...item,
-                    quantity: item.quantity + 1,
-                };
-            }
-            return item;
-
-        });
-        setCart(updatedCart);
-
-      }else{
-
-        setCart([
-            ...cart,
-            {
-                ...product,
-                quantity:1,
-            },
-        ]);
-
-      }
-      alert(`${product.name} added to cart!`);
-
-        
-    };
-
     return(
         <section className="min-h-screen bg-black text-white p-10">
             <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -103,7 +69,7 @@ export default function ProductDetails() {
                     </p>
 
                     <button 
-                      onClick={addToCart}
+                      onClick= {() => addToCart(product)}
                       className="bg-yellow-400 text-black 
                       px-8 py-3 rounded-full font-semibold"
                       >

@@ -1,23 +1,28 @@
 import Image from "next/image";
+import Link from "next/link";
 export default function Featured() {
     const sneakers = [
         {
             name: "Nike Air Max 270",
+            slug:"nike-air-max-270",
             price: "Rs 9,999",
             image: "/images/nike-airmax270.png"
         },
         {
             name: "Adidas Ultraboost",
+            slug:"adidas-ultraboost",
             price: "Rs 11,999",
             image: "/images/adidas-ultraboost.png"
         },
         {
             name: "Puma RS-X",
+            slug:"puma-rs-x",
             price: "Rs 8,499",
             image: "/images/puma-rsx.png"
         },
         {
             name: "New Balance 9060",
+            slug: "new-balance-9060",
             price: "Rs 12,499",
             image: "/images/newbalance-9060.png"
         }
@@ -53,9 +58,11 @@ export default function Featured() {
                             {sneaker.price}
                          </p>
 
-                         <button className="mt-4 text-yellow-400 font-semibold">
+                         <Link href={`/products/${sneaker.slug}`}>
+                           <button className="mt-4 text-yellow-400 font-semibold">
                             View →
-                         </button>
+                           </button>
+                         </Link>
                     </div>
                 ))}
             </div>

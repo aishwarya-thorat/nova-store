@@ -1,29 +1,42 @@
+"use client";
 import Image from "next/image";
+import {useContext} from "react";
+import { CartContext } from
+"@/context/CartContext";
 export default function ProductsPage() {
+
+    const {addToCart} = 
+    useContext(CartContext);
 
     const products = [
         {
+            id:1,
             name: "Nike Air Max 270",
             price: "Rs 9,999",
             image: "/images/nike-airmax270.png",
         },
         {
+            id:2,
             name: "Adidas Ultraboost",
             price: "Rs 11,999",
             image: "/images/adidas-ultraboost.png",
 
         },
         {
+            id:3,
             name: "Puma RS-X",
             price: "Rs 8,499",
             image: "/images/puma-rsx.png",
         },
         {
+            id:4,
             name: "New Balance 9060",
             price: "Rs 12,499",
             image: "/images/newbalance-9060.png",
         },
     ];
+
+   
 
     return(
         <section className="min-h-screen bg-black text-white px-10 py-24">
@@ -56,7 +69,9 @@ export default function ProductsPage() {
                                 {product.price}
                              </p>
 
-                             <button className="mt-4 bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold">
+                             <button 
+                               onClick={() => addToCart(product)}
+                               className="mt-4 bg-yellow-500 text-black px-5 py-2 rounded-full font-semibold">
                                 Add To Cart
                              </button>
                         </div>

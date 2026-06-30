@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Brands() {
   const brands = [
       { name: "Nike", count: "120+ Sneakers" },
@@ -28,10 +29,11 @@ export default function Brands() {
             <p className="text-zinc-400 mt-3">
                 {brand.count}
             </p>
-
-            <p className="text-yellow-500 mt-6 font-medium">
+            <Link href="/products">
+             <button className="mt-4 text-yellow-400 font-semibold">
                 EXPLORE →
-            </p>
+             </button>
+            </Link>
           </div>
         ))}
       </div>

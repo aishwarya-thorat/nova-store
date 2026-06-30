@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 export default function Hero() {
   return (
    <section className="relative min-h-screen overflow-hidden bg-black flex items-start justify-center">
@@ -48,10 +49,13 @@ export default function Hero() {
       <p className="mt-4 max-w-xl text-gray-400">
         Crafted for creators, athletes and dreamers who never stand still.
       </p>
+      
 
-      <button className="mt-8 rounded-full border border-yellow-500 px-8 py-3 text-yellow-500 hover:text-white transition">
+      <Link href="/products">
+         <button className="mt-8 rounded-full border border-yellow-500 px-8 py-3 text-yellow-500 hover:text-white transition">
         Shop Collection
-      </button>
+         </button>
+      </Link>
     </div>
    </section>
   );
