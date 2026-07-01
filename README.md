@@ -4,12 +4,12 @@ A modern **Full Stack E-Commerce Website** built using **Next.js**, **React.js**
 
 ---
 # Highlights
--Full Stack E-Commerce Website
--Next.js + React + MongoDB Atlas
--Shopping Cart & Checkout
--Admin Dashboard
--Product & Order Management
--Responsive Design
+- Full Stack E-Commerce Website
+- Next.js + React + MongoDB Atlas
+- Shopping Cart & Checkout
+- Admin Dashboard
+- Product & Order Management
+- Responsive Design
 
 ## ✨ Features
 
