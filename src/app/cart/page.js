@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import { CartContext } from 
 "@/context/CartContext";
+import Link from "next/link";
 
 export default function CartPage() {
 
@@ -15,13 +16,7 @@ export default function CartPage() {
    
 
     const total = cart.reduce((total, item) => {
-        const price  = Number(
-            item.price
-               .replace("Rs","")
-               .replace(",","")
-        );
-
-        return total + price * item.quantity;
+        return total + item.price * item.quantity;
 
     },0);
     return(
@@ -36,7 +31,7 @@ export default function CartPage() {
 
             {cart.map((item,index) => (
                 <div
-                 key={item.id}
+                 key={item._id}
                  className="bg-zinc-900 rounded-xl p-6 w-96 mt-4"
                  >
                     <img
@@ -54,21 +49,15 @@ export default function CartPage() {
                      </p>
 
                      <p className="text-yellow-400 mt-2">
-                        Rs{" "}
-                        {(
-                            Number(
-                                item.price 
-                                  .replace("Rs","")
-                                  .replace(",","")
-
-                            ) * item.quantity
-                        ).toLocaleString()}
+                        Rs {(item.price *
+                            item.quantity).toLocaleString()}
+                        
                      </p>
 
                     <div className="flex items-center gap-4 mt-4">
                         <button
                           onClick={() => 
-                    decreaseQuantity(item.id)}
+                    decreaseQuantity(item._id)}
                         className="bg-red-500 text-white w-10 h-10 rounded-full"
                         >
                             -
@@ -94,6 +83,12 @@ export default function CartPage() {
                     Total: Rs {total.toLocaleString()}
                 </h2>
             </div>
+
+            <Link href="/checkout">
+              <button className="mt-8 bg-yellow-500 text-balack px-8 py-4 rounded-xl font-bold">
+                Proceed to Checkout
+              </button>
+            </Link>
         </section>
     );
 }

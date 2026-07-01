@@ -1,32 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState} from "react";
 export default function Featured() {
-    const sneakers = [
-        {
-            name: "Nike Air Max 270",
-            slug:"nike-air-max-270",
-            price: "Rs 9,999",
-            image: "/images/nike-airmax270.png"
-        },
-        {
-            name: "Adidas Ultraboost",
-            slug:"adidas-ultraboost",
-            price: "Rs 11,999",
-            image: "/images/adidas-ultraboost.png"
-        },
-        {
-            name: "Puma RS-X",
-            slug:"puma-rs-x",
-            price: "Rs 8,499",
-            image: "/images/puma-rsx.png"
-        },
-        {
-            name: "New Balance 9060",
-            slug: "new-balance-9060",
-            price: "Rs 12,499",
-            image: "/images/newbalance-9060.png"
-        }
-    ];
+    const [sneakers, setSneakers] = useState([]);
+
+    useEffect(() => {
+        fetch("/api/products")
+          .then((res) => res.json())
+          .then((data) => setSneakers(data));
+    }, []);
 
     return(
         <section className="py-24 px-10 bg-black text-white">
@@ -35,9 +18,9 @@ export default function Featured() {
             </h2>
 
             <div className="grid md:grid-cols-4 gap-8">
-                {sneakers.map((sneaker) => (
+                {sneakers.slice(0,4).map((sneaker) => (
                     <div
-                     key={sneaker.name}
+                     key={sneaker._id}
                      className="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 hover:border-yellow-500 transition"
                      >
                         <div className="h-52 flex items-center justify-center">
@@ -55,7 +38,7 @@ export default function Featured() {
                          </h3>
 
                          <p className="text-gray-400">
-                            {sneaker.price}
+                            Rs {sneaker.price.toLocaleString()}
                          </p>
 
                          <Link href={`/products/${sneaker.slug}`}>

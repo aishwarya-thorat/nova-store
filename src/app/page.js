@@ -1,21 +1,31 @@
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import Brands from "@/components/Brands";
-import Featured from "@/components/Featured";
-import WhyChoose from "@/components/WhyChoose";
-import Footer from "@/components/Footer";
-export default function Home() {
+import Link from "next/link";
+
+export default function LandingPage() {
   return (
-    <> 
-      <Navbar />
-      <Hero />
-      <Brands />
-      <Featured />
-      <WhyChoose />
-      <Footer />
-    </>
+    <section className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+      <div className="text-center max-w-lg w-full">
+        <h1 className="text-6xl font-extrabold mb-6">
+          NOVA
+        </h1>
 
+        <p className="text-gray-400 mb-12 text-lg">
+          Choose how you want to continue
+        </p>
 
-    
+        <div className="space-y-6">
+          <Link href="/home">
+            <button className="w-full bg-yellow-500 text-black py-4 rounded-2xl text-xl font-bold hover:scale-105 transition">
+              🛍️ Shop Now
+            </button>
+          </Link>
+
+          <Link href="/login">
+            <button className="w-full border border-yellow-500 py-4 rounded-2xl text-xl font-bold hover:bg-yellow-500 hover:text-black transition">
+              👑 Admin Portal
+            </button>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

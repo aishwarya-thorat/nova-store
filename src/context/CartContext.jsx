@@ -6,12 +6,12 @@ export default function CartProvider({ children}) {
 
     const addToCart = (product) => {
         const existingProduct = cart.find(
-            (item) => item.id === product.id
+            (item) => item.id === product._id
         );
 
         if(existingProduct) {
             const updatedCart = cart.map((item) => {
-                if(item.id === product.id) {
+                if(item.id === product._id) {
                     return {
                         ...item,
                         quantity: item.quantity + 1,
@@ -33,9 +33,9 @@ export default function CartProvider({ children}) {
         alert(`${product.name} added to cart successfully!`);
     };
 
-    const decreaseQuantity = (id) => {
+    const decreaseQuantity = (_id) => {
         const updatedCart = cart.map((item) => {
-            if(item.id === id){
+            if(item._id === _id){
                 return{
                     ...item,
                     quantity:item.quantity-1,
@@ -69,6 +69,10 @@ export default function CartProvider({ children}) {
 
     }, [cart]);
 
+    function clearCart(){
+        setCart([]);
+    }
+
     return (
         <CartContext.Provider 
         value={{ 
@@ -76,6 +80,7 @@ export default function CartProvider({ children}) {
             setCart,
             addToCart,
             decreaseQuantity,
+            clearCart,
             }}
         >
             {children}

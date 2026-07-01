@@ -3,38 +3,40 @@ import Image from "next/image";
 import {useContext} from "react";
 import { CartContext } from
 "@/context/CartContext";
+import { useState, useEffect } from "react";
 export default function ProductsPage() {
 
     const {addToCart} = 
     useContext(CartContext);
 
-    const products = [
-        {
-            id:1,
-            name: "Nike Air Max 270",
-            price: "Rs 9,999",
-            image: "/images/nike-airmax270.png",
-        },
-        {
-            id:2,
-            name: "Adidas Ultraboost",
-            price: "Rs 11,999",
-            image: "/images/adidas-ultraboost.png",
+    const [products, setProducts] = 
+    useState([]);
 
-        },
-        {
-            id:3,
-            name: "Puma RS-X",
-            price: "Rs 8,499",
-            image: "/images/puma-rsx.png",
-        },
-        {
-            id:4,
-            name: "New Balance 9060",
-            price: "Rs 12,499",
-            image: "/images/newbalance-9060.png",
-        },
-    ];
+    const [search, setSearch] = useState("");
+    const [selectedBrand, setSelectedBrand] = useState("All");
+
+    useEffect(() => {
+        fetch("/api/products")
+         .then((res) => res.json())
+         .then((data) => setProducts(data));
+    }, []);
+
+    const filteredProducts = 
+    products.filter((product) => {
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesBrand = 
+        selectedBrand === "All" ||
+        product.brand === selectedBrand;
+
+    
+
+      return matchesSearch && matchesBrand;
+
+
+    });
+   
 
    
 
@@ -44,10 +46,38 @@ export default function ProductsPage() {
                 Our Collection
             </h1>
 
+            <input 
+              type="text"
+              placeholder="Search sneakers..."
+              value={search}
+              onChange={(e) => 
+        setSearch(e.target.value)}
+              className="w-full p-4 rounded-xl bg-zinc-900 text-white mb-8 outline-none borber border-zinc-700"
+            />
+
+            <div className="flex gap-4 mb-8 flex-wrap">
+                {["All","Nike","Adidas","Puma","New Balance"].map((brand) => (
+                    <button
+                      key={brand}
+                      onClick={() => 
+                setSelectedBrand(brand)}
+                      className={`px-5 py-2 rounded-full $ {
+                          selectedBrand === brand
+                            ? "bg-yellow-500 text-black"
+                            : "bg-zinc-800 text-white"
+                            }`}
+                    >
+                        {brand}
+                    </button>
+                      
+                ))}
+            </div>
+              
+
             <div className="grid md:grid-cols-4 gap-8">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                     <div
-                     key={product.name}
+                     key={product._id}
                      className="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 hover:border-yellow-500 transition"
                      >
                         <div className="h-52 flex items-center justify-center">
@@ -66,7 +96,7 @@ export default function ProductsPage() {
                              </h3>
                              
                              <p className="text-gray-400">
-                                {product.price}
+                                Rs {product.price.toLocaleString()}
                              </p>
 
                              <button 
