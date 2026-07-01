@@ -5,33 +5,29 @@ export default function CartProvider({ children}) {
     const [cart, setCart] = useState([]);
 
     const addToCart = (product) => {
-        const existingProduct = cart.find(
-            (item) => item.id === product._id
-        );
+  const existingProduct = cart.find(
+    (item) => item._id === product._id
+  );
 
-        if(existingProduct) {
-            const updatedCart = cart.map((item) => {
-                if(item.id === product._id) {
-                    return {
-                        ...item,
-                        quantity: item.quantity + 1,
-                    };
-                }
-                return item;
-            });
-
-            setCart(updatedCart);
-        } else{
-            setCart([
-                ...cart,
-                {
-                    ...product,
-                    quantity:1,
-                },
-            ]);
-        }
-        alert(`${product.name} added to cart successfully!`);
-    };
+  if (existingProduct) {
+    setCart(
+      cart.map((item) =>
+        item._id === product._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  } else {
+    setCart([
+      ...cart,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ]);
+  }
+  alert(`${product.name} added to cart successfully!`);
+};
 
     const decreaseQuantity = (_id) => {
         const updatedCart = cart.map((item) => {
