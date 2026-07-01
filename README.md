@@ -214,6 +214,7 @@ http://localhost:3000
 ```
 
 ---
+> **Note:**This Project requires a valid MongoDB Atlas connection string in '.env.local' to run successfully
 
 # ✅ Internship Deliverables Completed
 
