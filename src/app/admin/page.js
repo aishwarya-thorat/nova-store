@@ -12,6 +12,11 @@ export default function AdminPage(){
     const[slug,setSlug]=useState("");
     const router = useRouter();
 
+    function logout(){
+      localStorage.removeItem("role");
+      router.push("/login");
+    }
+
     async function loadData() {
   const productsRes = await fetch("/api/products");
   const productsData = await productsRes.json();
@@ -30,7 +35,15 @@ export default function AdminPage(){
     return;
   }
 
-  loadData();
+  fetch("/api/products")
+    .then((res) => res.json())
+    .then((data) => setProducts(data));
+
+  fetch("/api/orders")
+    .then((res) => res.json())
+    .then((data) => setOrders(data));
+
+  
 }, []);
 
     async function addProduct() {
@@ -74,6 +87,10 @@ export default function AdminPage(){
 
   location.reload();
 }
+
+const totalRevenue = orders.reduce((sum,order) => sum + order.total,
+0
+);
 async function updateOrderStatus(id, status) {
   await fetch("/api/orders", {
     method: "PUT",
@@ -91,9 +108,49 @@ async function updateOrderStatus(id, status) {
 
     return (
   <section className="min-h-screen bg-black text-white pt-32 px-10">
+  <div className="flex justify-between items-center mb-10">
     <h1 className="text-5xl font-bold mb-10">
       NOVA Admin Dashboard
     </h1>
+
+    <button 
+      onClick={logout}
+      className="bg-red-600 hover:bg-red-700 px-5 py-3 rounded-xl font-semibold">
+        Logout
+      </button>
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-6 mb-10">
+      <div className="bg-gradient-to-r from-yellow-500/20 to-zinc-900 rounded-xl p-6 border border-yellow-500">
+        <h2 className="text-gray-400">
+          Total Products
+        </h2>
+
+        <p className="text-4xl font-bold text-yellow-400">
+          {products.length}
+        </p>
+      </div>
+
+      <div className="bg-gradient-to-r from-green-500/20 to-zinc-900 rounded-xl p-6 border border-green-500">
+        <h2 className="text-gray-400">
+          Total Orders
+        </h2>
+
+        <p className="text-4xl font-bold text-green-400">
+          {orders.length}
+        </p>
+      </div>
+
+      <div className="bg-gradient-to-r from-blue-500/20 to-zinc-900 rounded-xl p-6 border border-blue-500">
+        <h2 className="text-gray-400">
+          Revenue
+        </h2>
+
+        <p className="text-4xl font-bold text-blue-400">
+          ₹{totalRevenue.toLocaleString()}
+        </p>
+      </div>
+    </div>
 
     <div className="grid gap-4 mb-10">
       <input
